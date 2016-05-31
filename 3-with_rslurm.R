@@ -30,12 +30,11 @@ params <- data.frame(nsteps = runif(nwalks, 100, 1000),
                      sigma = runif(nwalks, 0, 10))
 
 
-# Save the auxiliary function in a .RData file to export to cluster nodes
-save(rwalk, file = "add_data.RData")
-
 # Use slurm_apply to parallelize computation over two cluster nodes (16 cores)
-#  Note: important to save SLURM job into object (sjob) for reference below
-sjob <- slurm_apply(rw_stats, params, nodes = 2, data_file = "add_data.RData")
+#  Note that you need to specify the "rwalk" function as an additional object
+#  and set the partition to "sesync" when using multiple cores per node
+sjob <- slurm_apply(rw_stats, params, nodes = 2, cpus_per_node = 8, 
+                    add_objects = "rwalk", slurm_options = list(partition = "sesync"))
 
 # Show the status of the job in the queue, or indicate if it's done
 print_job_status(sjob)

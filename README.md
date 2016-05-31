@@ -53,9 +53,11 @@ since it is not currently possible for one job to use multiple nodes.
 ## 3. Using the rslurm package
 
 The third method, as suggested by the script title `3-with_rslurm.R`, makes use
-of the `rslurm` R package (https://github.com/SESYNC-ci/rslurm). The `slurm_apply` function automates the process of splitting a set of parameters in multiple
-chunks, sending each one to a different cluster node, and parallelizing within
+of the `rslurm` R package (https://cran.r-project.org/web/packages/rslurm/index.html). 
+The `slurm_apply` function automates the process of splitting a set of parameters 
+in multiple chunks, sending each one to a different cluster node, and parallelizing within
 each node using `parallel` (as in the previous method). Another `rslurm` function,
 `get_slurm_out`, serves to combine the output from the different nodes into a
 single R object. Detailed information and examples can be found in the 
-package documentation accessible from R.
+[vignette](https://cran.r-project.org/web/packages/rslurm/vignettes/rslurm-vignette.html) 
+and in the package documentation accessible from R.
