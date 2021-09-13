@@ -30,11 +30,10 @@ params <- data.frame(nsteps = runif(nwalks, 100, 1000),
                      sigma = runif(nwalks, 0, 10))
 
 
-# Use slurm_apply to parallelize computation over two cluster nodes (16 cores)
+# Use slurm_apply to parallelize computation over 16 cores on a single cluster node
 #  Note that you need to specify the "rwalk" function as an additional object
-#  and set the partition to "sesync" when using multiple cores per node
-sjob <- slurm_apply(rw_stats, params, nodes = 2, cpus_per_node = 8, 
-                    add_objects = "rwalk", slurm_options = list(partition = "sesync"))
+sjob <- slurm_apply(rw_stats, params, nodes = 1, cpus_per_node = 16, 
+                    global_objects = "rwalk")
 
 # Show the status of the job in the queue, or indicate if it's done
 print_job_status(sjob)
